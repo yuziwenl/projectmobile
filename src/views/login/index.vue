@@ -45,6 +45,21 @@ export default {
         this.$toast.fail('登录失败')
       }
     }
+  },
+  created () {
+    const dict = {
+      custom: {
+        mobile: {
+          required: '请输入手机号码',
+          digits: '手机号码必须是11位的数字'
+        },
+        code: {
+          required: '请输入验证码',
+          digits: '验证码必须是6位的数字'
+        }
+      }
+    }
+    this.$validator.localize('custom', dict)
   }
 }
 </script>
