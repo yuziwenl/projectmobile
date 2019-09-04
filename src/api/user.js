@@ -7,5 +7,10 @@ export const login = ({
   return request.post('/app/v1_0/authorizations', {
     moblie,
     code
+  //  request({
+  //     method: 'POST',
+  //     url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+  //     data: this.user
+    // })
   })
 }

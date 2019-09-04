@@ -26,10 +26,12 @@ export default {
   methods: {
     async handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        const data = await login(this.user)
+        this.$store.commit('setUser', data)
+        this.$router.push('/')
+        this.$toast.success('登录成功')
       } catch (err) {
-        console.log(err)
+        this.$toast.fail('登录失败')
       }
     }
   }
