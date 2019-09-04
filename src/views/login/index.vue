@@ -36,6 +36,10 @@ export default {
     ...mapMutations(['setUser']),
     async handleLogin () {
       try {
+        const valid = await this.$validator.validate()
+        if (!valid) {
+          return
+        }
         const data = await login(this.user)
         // this.$store.commit('setUser', data)
         this.setUser(data)
