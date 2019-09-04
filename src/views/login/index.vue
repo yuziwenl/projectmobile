@@ -2,14 +2,16 @@
   <div>
      <van-nav-bar title="菜单"/>
      <van-cell-group>
-  <van-field  v-validate="'required'"
+  <van-field  v-validate="'required|digits:11'"
         name="mobile"
         :error-message="errors.first('mobile')"
         clearable
   v-model="user.mobile"
   left-icon="phone-o"
    placeholder="请输入手机号" />
-  <van-field v-model="user.code" left-icon="star-o" placeholder="请输入验证码">
+  <van-field v-model="user.code" left-icon="star-o" placeholder="请输入验证码" v-validate="'required|digits:6'"
+  name='code'
+   :error-message="errors.first('code')">
    <van-button slot="button" type="default" size="small">发送验证码</van-button></van-field>
 </van-cell-group>
 <div class="login-btn">
