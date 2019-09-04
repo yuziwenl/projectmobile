@@ -15,7 +15,10 @@
    <van-button slot="button" type="default" size="small">发送验证码</van-button></van-field>
 </van-cell-group>
 <div class="login-btn">
-      <van-button class="btn" type="info" @click='handleLogin'>登录</van-button>
+      <van-button class="btn" type="info" @click='handleLogin'
+      :loading="loading"
+        loading-type="spinner"
+        loading-text="正在登录...">登录</van-button>
     </div>
     </div>
 </template>
@@ -29,15 +32,18 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      }
+      },
+      loading: false
     }
   },
   methods: {
     ...mapMutations(['setUser']),
     async handleLogin () {
+      this.loading = true
       try {
         const valid = await this.$validator.validate()
         if (!valid) {
+          this.loading = false
           return
         }
         const data = await login(this.user)
@@ -48,6 +54,7 @@ export default {
       } catch (err) {
         this.$toast.fail('登录失败')
       }
+      this.loading = false
     }
   },
   created () {

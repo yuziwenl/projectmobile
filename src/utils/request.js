@@ -1,5 +1,6 @@
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import store from '@/store'
 const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
 })
@@ -15,6 +16,9 @@ instance.defaults.transformResponse = [function (data) {
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+  if (store.state.user) {
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
+  }
   // Do something before request is sent
   return config
 }, function (error) {
