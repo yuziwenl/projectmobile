@@ -2,7 +2,13 @@
   <div>
      <van-nav-bar title="菜单"/>
      <van-cell-group>
-  <van-field v-model="user.mobile" left-icon="phone-o" placeholder="请输入手机号" />
+  <van-field  v-validate="'required'"
+        name="mobile"
+        :error-message="errors.first('mobile')"
+        clearable
+  v-model="user.mobile"
+  left-icon="phone-o"
+   placeholder="请输入手机号" />
   <van-field v-model="user.code" left-icon="star-o" placeholder="请输入验证码">
    <van-button slot="button" type="default" size="small">发送验证码</van-button></van-field>
 </van-cell-group>
@@ -14,6 +20,7 @@
 
 <script>
 import { login } from '@/api/user'
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -24,10 +31,12 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     async handleLogin () {
       try {
         const data = await login(this.user)
-        this.$store.commit('setUser', data)
+        // this.$store.commit('setUser', data)
+        this.setUser(data)
         this.$router.push('/')
         this.$toast.success('登录成功')
       } catch (err) {
