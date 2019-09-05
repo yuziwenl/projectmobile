@@ -8,8 +8,8 @@
       <van-tab v-for="channel in channels" :title="channel.name" :key="channel.id">
             <!-- 文章列表,不同的标签页下有不同的列表 -->
         <van-list
-          v-model="loading"
-          :finished="finished"
+          v-model="currentChannel.loading"
+          :finished="currentChannel.finished"
           finished-text="没有更多了"
           @load="onLoad"
         >
@@ -53,6 +53,8 @@ export default {
       data.channels.forEach((channel) => {
         channel.timestamp = null
         channel.articles = []
+        channel.loading = false
+        channel.finished = false
       })
       this.channels = data.channels
     },
@@ -64,7 +66,10 @@ export default {
       })
       this.currentChannel.timestamp = data.pre_timestamp
       this.currentChannel.articles.push(...data.results)
-      this.loading = false
+      this.currentChannel.loading = false
+      if (data.results.length === 0) {
+        this.currentChannel.finished = true
+      }
     }
   }
 }
