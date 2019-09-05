@@ -4,7 +4,7 @@
       title="黑马头条" fixed
     />
     <!-- 频道列表 -->
-    <van-tabs animated>
+    <van-tabs animated  v-model="activeIndex">
       <van-tab v-for="channel in channels" :title="channel.name" :key="channel.id">
             <!-- 文章列表,不同的标签页下有不同的列表 -->
         <van-list
@@ -33,7 +33,8 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      channels: []
+      channels: [],
+      activeIndex: 0
     }
   },
   created () {
