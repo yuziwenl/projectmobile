@@ -14,9 +14,9 @@
           @load="onLoad"
         >
           <van-cell
-            v-for="item in list"
-            :key="item"
-            :title="item"
+            v-for="article in currentChannel.articles"
+            :key="article.art_id"
+            :title="article.title"
           />
         </van-list>
       </van-tab>
@@ -26,6 +26,7 @@
 
 <script>
 import { getDefaultOrUserChannels } from '@/api/channel'
+import { getArticles } from '@/api/article'
 export default {
   name: 'Home',
   data () {
@@ -40,24 +41,30 @@ export default {
   created () {
     this.loadChannels()
   },
+  computed: {
+    currentChannel () {
+      return this.channels[this.activeIndex]
+    }
+  },
   methods: {
     async loadChannels () {
       const data = await getDefaultOrUserChannels()
+      // 给所有的频道设置，时间戳和文章数组
+      data.channels.forEach((channel) => {
+        channel.timestamp = null
+        channel.articles = []
+      })
       this.channels = data.channels
     },
-    onLoad () {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true
-        }
-      }, 500)
+    async onLoad () {
+      const data = await getArticles({
+        channel_id: this.currentChannel.id,
+        timestamp: this.currentChannel.timestamp || Date.now(),
+        with_top: 1
+      })
+      this.currentChannel.timestamp = data.pre_timestamp
+      this.currentChannel.articles.push(...data.results)
+      this.loading = false
     }
   }
 }
