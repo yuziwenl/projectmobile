@@ -7,6 +7,8 @@
     <van-tabs animated  v-model="activeIndex">
       <van-tab v-for="channel in channels" :title="channel.name" :key="channel.id">
             <!-- 文章列表,不同的标签页下有不同的列表 -->
+             <van-pull-refresh v-model="currentChannel.pullLoading" @refresh="onRefresh"
+                  :success-text="successText">
         <van-list
           v-model="currentChannel.loading"
           :finished="currentChannel.finished"
@@ -19,6 +21,7 @@
             :title="article.title"
           />
         </van-list>
+       </van-pull-refresh>
       </van-tab>
     </van-tabs>
   </div>
@@ -35,7 +38,8 @@ export default {
       loading: false,
       finished: false,
       channels: [],
-      activeIndex: 0
+      activeIndex: 0,
+      successText: ''
     }
   },
   created () {
@@ -53,8 +57,11 @@ export default {
       data.channels.forEach((channel) => {
         channel.timestamp = null
         channel.articles = []
+        // 上啦加载
         channel.loading = false
         channel.finished = false
+        // 下拉加载
+        channel.pullLoading = false
       })
       this.channels = data.channels
     },
@@ -70,6 +77,16 @@ export default {
       if (data.results.length === 0) {
         this.currentChannel.finished = true
       }
+    },
+    async onRefresh () {
+      const data = await getArticles({
+        channel_id: this.currentChannel.id,
+        timestamp: Date.now(),
+        with_top: 1
+      })
+      this.currentChannel.pullLoading = false
+      this.currentChannel.articles.unshift(...data.results)
+      this.successText = `加载了${data.results.length}`
     }
   }
 }
