@@ -15,7 +15,7 @@
         >
           <van-cell
             v-for="article in currentChannel.articles"
-            :key="article.art_id"
+            :key="article.art_id.toString()"
             :title="article.title"
           />
         </van-list>
