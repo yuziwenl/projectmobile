@@ -27,12 +27,19 @@ export default {
     value: {
       type: Boolean,
       required: true
+    },
+    article: {
+      type: Object,
+      required: true
     }
   },
   data () {
     return {
       showReports: false
     }
+  },
+  created () {
+    console.log(this.article.art_id)
   }
 }
 </script>
