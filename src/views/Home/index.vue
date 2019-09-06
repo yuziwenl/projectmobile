@@ -52,7 +52,7 @@
        </van-pull-refresh>
       </van-tab>
     </van-tabs>
-    <more-action v-if="currentArticle" :article='currentArticle' v-model="showMoreAction"></more-action>
+    <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -130,6 +130,14 @@ export default {
     handleAction (article) {
       this.showMoreAction = true
       this.currentArticle = article
+    },
+    handleSuccess () {
+      this.showMoreAction = false
+      const articles = this.currentChannel.articles
+      const index = articles.findIndex((articler) => {
+        return articler.art_id === this.currentArticle.art_id
+      })
+      articles.splice(index, 1)
     }
   }
 }
