@@ -12,3 +12,8 @@ export const getArticles = (
     }
   })
 }
+export const dislikeArticle = (id) => {
+  return request.post('/app/v1_0/article/dislikes', {
+    target: id
+  })
+}

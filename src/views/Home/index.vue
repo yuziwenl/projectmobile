@@ -44,7 +44,7 @@
                   <span>{{ article.comm_count }}评论</span>&nbsp;
                   <span>{{ article.pubdate | fmtDate }}</span>&nbsp;
 
-                  <van-icon name="cross" class="close" />
+                  <van-icon name="cross" class="close" @click='showMoreAction=true' />
                 </p>
               </div>
             </van-cell>
@@ -52,7 +52,7 @@
        </van-pull-refresh>
       </van-tab>
     </van-tabs>
-    <more-action></more-action>
+    <more-action v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -77,6 +77,7 @@ export default {
       channels: [],
       activeIndex: 0,
       successText: '',
+      showMoreAction: false,
       showChannelEdit: false
     }
   },
