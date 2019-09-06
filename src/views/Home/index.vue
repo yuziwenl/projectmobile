@@ -5,6 +5,7 @@
     />
     <!-- 频道列表 -->
     <van-tabs animated  v-model="activeIndex">
+       <van-icon slot="nav-right" name="wap-nav" class="nav-btn" @click="showChannelEdit=true" />
       <van-tab v-for="channel in channels" :title="channel.name" :key="channel.id">
             <!-- 文章列表,不同的标签页下有不同的列表 -->
              <van-pull-refresh v-model="currentChannel.pullLoading" @refresh="onRefresh"
@@ -41,7 +42,7 @@
                 <p>
                   <span>{{ article.aut_name }}</span>&nbsp;
                   <span>{{ article.comm_count }}评论</span>&nbsp;
-                  <span>{{ article.pubdate |fmDate }}</span>&nbsp;
+                  <span>{{ article.pubdate | fmtDate }}</span>&nbsp;
 
                   <van-icon name="cross" class="close" />
                 </p>
@@ -75,7 +76,8 @@ export default {
       finished: false,
       channels: [],
       activeIndex: 0,
-      successText: ''
+      successText: '',
+      showChannelEdit: false
     }
   },
   created () {
@@ -134,6 +136,7 @@ export default {
     position: fixed;
     top: 46px;
     left: 0;
+    right:10px;
     z-index: 10;
   }
   /deep/ .van-tabs__content {
@@ -143,6 +146,14 @@ export default {
 }
 .close {
   float: right;
+}
+.nav-btn {
+  position: fixed;
+  right: 10px;
+  line-height: 44px;
+  background-color: #fff;
+  opacity: 0.8;
+  font-size: 22px;
 }
 
 </style>

@@ -10,12 +10,13 @@ import { fmtDate } from '@/utils/dayjs'
 import 'vant/lib/index.css'
 import './styles/index.less'
 Vue.filter('fmtDate', fmtDate)
+Vue.use(Vant)
 Vue.use(VeeValidate, {
   events: ''
 })
 Validator.localize('zhCN', zhCN)
 Vue.config.productionTip = false
-Vue.use(Vant)
+
 new Vue({
   router,
   store,
