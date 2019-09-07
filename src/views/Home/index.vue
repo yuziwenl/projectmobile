@@ -53,7 +53,7 @@
       </van-tab>
     </van-tabs>
     <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
-    <channel-edit v-model="showChannelEdit" :channels='channels'></channel-edit>
+    <channel-edit v-model="showChannelEdit" :channels='channels' :active="activeIndex"></channel-edit>
   </div>
 </template>
 
