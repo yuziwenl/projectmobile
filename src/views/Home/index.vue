@@ -59,6 +59,7 @@
 <script>
 import { getDefaultOrUserChannels } from '@/api/channel'
 import { getArticles } from '@/api/article'
+import { getItem, setItem } from '@/utils/localStorage'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
 import MoreAction from './components/MoreAction'
@@ -91,9 +92,22 @@ export default {
   },
   methods: {
     async loadChannels () {
-      const data = await getDefaultOrUserChannels()
+      // const data = await getDefaultOrUserChannels()
+      let channels = []
+      // 1. 如果用户登录，发送请求，获取数据ss
+      if (this.$store.state.user) {
+        const data = await getDefaultOrUserChannels()
+        channels = data.channels
+      } else {
+        channels = getItem('channels')
+        if (!channels) {
+          const data = await getDefaultOrUserChannels()
+          channels = data.channels
+          setItem('channels', channels)
+        }
+      }
       // 给所有的频道设置，时间戳和文章数组
-      data.channels.forEach((channel) => {
+      channels.forEach((channel) => {
         channel.timestamp = null
         channel.articles = []
         // 上啦加载
@@ -102,7 +116,7 @@ export default {
         // 下拉加载
         channel.pullLoading = false
       })
-      this.channels = data.channels
+      this.channels = channels
     },
     async onLoad () {
       const data = await getArticles({
