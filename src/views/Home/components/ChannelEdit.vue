@@ -12,7 +12,16 @@
         round
         type="danger"
         size="mini"
+        v-show="!isEdit"
+        @click="isEdit=true"
       >编辑</van-button>
+        <van-button
+        round
+        type="danger"
+        size="mini"
+        v-show="isEdit"
+        @click="isEdit=false"
+      >完成</van-button>
     </van-cell>
     <van-grid>
       <van-grid-item
@@ -24,6 +33,7 @@
           slot="icon"
           class="close-icon"
           name="close"
+        v-show="isEdit"
         />
       </van-grid-item>
     </van-grid>
@@ -50,7 +60,7 @@ export default {
   },
   data () {
     return {
-
+      isEdit: false
     }
   }
 }
