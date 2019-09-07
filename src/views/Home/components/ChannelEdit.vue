@@ -27,6 +27,7 @@
       <van-grid-item
         v-for="(channel,index) in channels"
         :key="channel.id"
+        @click="handleMyChannelItem(index)"
       >
       <div slot="text" class="van-grid-item__text" :class="{ active: active === index }" >
           {{ channel.name }}
@@ -93,6 +94,11 @@ export default {
     async loadAllChannels () {
       const data = await getAllChannels()
       this.allChannels = data.channels
+    },
+    handleMyChannelItem (index) {
+      if (!this.isEdit) {
+        this.$emit('activeChange', index)
+      }
     }
   }
 }

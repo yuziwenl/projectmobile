@@ -53,7 +53,7 @@
       </van-tab>
     </van-tabs>
     <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
-    <channel-edit v-model="showChannelEdit" :channels='channels' :active="activeIndex"></channel-edit>
+    <channel-edit v-model="showChannelEdit" :channels='channels' :active="activeIndex" @activeChange='handleChange'></channel-edit>
   </div>
 </template>
 
@@ -156,6 +156,10 @@ export default {
         return articler.art_id === this.currentArticle.art_id
       })
       articles.splice(index, 1)
+    },
+    handleChange (index) {
+      this.activeIndex = index
+      this.showChannelEdit = false
     }
   }
 }
