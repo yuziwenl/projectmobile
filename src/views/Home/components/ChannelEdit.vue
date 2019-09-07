@@ -27,16 +27,16 @@
       <van-grid-item
         v-for="(channel,index) in channels"
         :key="channel.id"
-        @click="handleMyChannelItem(index)"
+        @click="handleMyChannelItem(index,channel.id)"
       >
       <div slot="text" class="van-grid-item__text" :class="{ active: active === index }" >
           {{ channel.name }}
         </div>
         <van-icon
           slot="icon"
-          class="close-icon && index !== 0"
+          class="close-icon"
           name="close"
-        v-show="isEdit"
+        v-show="isEdit && index !== 0"
         />
       </van-grid-item>
     </van-grid>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/channel'
+import { getAllChannels, deleteChannel } from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/localStorage'
 
@@ -99,13 +99,13 @@ export default {
       const data = await getAllChannels()
       this.allChannels = data.channels
     },
-    handleMyChannelItem (index) {
+    async handleMyChannelItem (index, channelId) {
       if (!this.isEdit) {
         this.$emit('activeChange', index)
       }
       this.channels.splice(index, 1)
       if (this.user) {
-
+        await deleteChannel(channelId)
       }
       setItem('channels', this.channels)
     }
