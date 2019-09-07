@@ -19,12 +19,3 @@ export const blacklists = (id) => {
     target: id
   })
 }
-export const reportArticle = ({
-  target,
-  type
-}) => {
-  return request.post(' /app/v1_0/article/reports', {
-    target,
-    type
-  })
-}
