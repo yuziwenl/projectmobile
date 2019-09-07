@@ -53,6 +53,7 @@
       </van-tab>
     </van-tabs>
     <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
+    <channel-edit></channel-edit>
   </div>
 </template>
 
@@ -63,12 +64,14 @@ import { getItem, setItem } from '@/utils/localStorage'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
 import MoreAction from './components/MoreAction'
+import ChannelEdit from './components/ChannelEdit'
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
 export default {
   name: 'Home',
   components: {
-    MoreAction
+    MoreAction,
+    ChannelEdit
   },
   data () {
     return {
