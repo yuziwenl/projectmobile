@@ -34,7 +34,7 @@
         </div>
         <van-icon
           slot="icon"
-          class="close-icon"
+          class="close-icon && index !== 0"
           name="close"
         v-show="isEdit"
         />
@@ -54,6 +54,9 @@
 
 <script>
 import { getAllChannels } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/localStorage'
+
 export default {
   name: 'ChannelEdit',
   props: {
@@ -71,6 +74,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     recommendChannels () {
       const ids = this.channels.map((channel) => {
         return channel.id
@@ -99,6 +103,11 @@ export default {
       if (!this.isEdit) {
         this.$emit('activeChange', index)
       }
+      this.channels.splice(index, 1)
+      if (this.user) {
+
+      }
+      setItem('channels', this.channels)
     }
   }
 }
