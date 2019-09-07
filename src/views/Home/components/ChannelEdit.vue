@@ -41,15 +41,16 @@
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
       <van-grid-item
-        v-for="value in 8"
-        :key="value"
-        text="文字"
+        v-for="channel in recommendChannels"
+        :key="channel.id"
+        :text="channel.name"
       />
     </van-grid>
   </van-popup>
 </template>
 
 <script>
+import { getAllChannels } from '@/api/channel'
 export default {
   name: 'ChannelEdit',
   props: {
@@ -62,9 +63,30 @@ export default {
       required: true
     }
   },
+  computed: {
+    recommendChannels () {
+      const ids = this.channels.map((channel) => {
+        return channel.id
+      })
+      return this.allChannels.filter((channel) => {
+        return !ids.includes(channel.id)
+      })
+    }
+
+  },
   data () {
     return {
-      isEdit: false
+      isEdit: false,
+      allChannels: []
+    }
+  },
+  created () {
+    this.loadAllChannels()
+  },
+  methods: {
+    async loadAllChannels () {
+      const data = await getAllChannels()
+      this.allChannels = data.channels
     }
   }
 }
