@@ -53,7 +53,7 @@
       </van-tab>
     </van-tabs>
     <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
-    <channel-edit></channel-edit>
+    <channel-edit v-model="showChannelEdit"></channel-edit>
   </div>
 </template>
 
@@ -82,7 +82,8 @@ export default {
       activeIndex: 0,
       successText: '',
       showMoreAction: false,
-      currentArticle: null
+      currentArticle: null,
+      showChannelEdit: false
     }
   },
   created () {
