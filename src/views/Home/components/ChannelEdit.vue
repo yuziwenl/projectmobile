@@ -44,6 +44,7 @@
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
       <van-grid-item
+      @click='handleChannelItem(channel)'
         v-for="channel in recommendChannels"
         :key="channel.id"
         :text="channel.name"
@@ -106,6 +107,13 @@ export default {
       this.channels.splice(index, 1)
       if (this.user) {
         await deleteChannel(channelId)
+      }
+      setItem('channels', this.channels)
+    },
+    handleChannelItem (channel) {
+      this.channels.push(channel)
+      if (this.user) {
+
       }
       setItem('channels', this.channels)
     }
