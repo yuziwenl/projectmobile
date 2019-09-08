@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { getAllChannels, deleteChannel } from '@/api/channel'
+import { getAllChannels, deleteChannel, addChannel } from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/localStorage'
 
@@ -110,10 +110,10 @@ export default {
       }
       setItem('channels', this.channels)
     },
-    handleChannelItem (channel) {
+    async  handleChannelItem (channel) {
       this.channels.push(channel)
       if (this.user) {
-
+        await addChannel(channel.id, this.channels.length)
       }
       setItem('channels', this.channels)
     }
