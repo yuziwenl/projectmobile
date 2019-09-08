@@ -110,7 +110,12 @@ export default {
       }
       setItem('channels', this.channels)
     },
-    async  handleChannelItem (channel) {
+    async handleChannelItem (channel) {
+      this.$set(channel, 'timestamp', null)
+      this.$set(channel, 'articles ', [])
+      this.$set(channel, 'loading', false)
+      this.$set(channel, 'finished ', false)
+      this.$set(channel, 'pullLoading', false)
       this.channels.push(channel)
       if (this.user) {
         await addChannel(channel.id, this.channels.length)
