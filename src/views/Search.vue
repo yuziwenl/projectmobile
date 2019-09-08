@@ -14,7 +14,9 @@
     <!-- 搜索提示 -->
     <van-cell-group v-show="value">
       <van-cell @click="onSearch(item)"
-      v-for="item in suggestionList" :key='item' :title="item" icon="search"/>
+      v-for="item in suggestionList" :key='item' icon="search">
+      <div slot="title" v-html="highlight(item)"></div>
+    </van-cell>
     </van-cell-group>
 
     <!-- 历史记录 -->
@@ -88,6 +90,10 @@ export default {
     handleDelete (index) {
       this.histories.splice(index, 1)
       storageTools.setItem('history', this.histories)
+    },
+    highlight (item) {
+      const reg = new RegExp(this.value, 'gi')
+      return item.replace(reg, `<span style ="color:red">${this.value}</span>`)
     }
   }
 }
