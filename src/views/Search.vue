@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { getSuggestion } from '@/api/search'
 import { mapState } from 'vuex'
 import * as storageTools from '@/utils/localStorage'
@@ -85,14 +86,14 @@ export default {
     },
     onCancel () {},
     // 在文本框输入的过程中获取搜索提示
-    async handleInput () {
+    handleInput: _.debounce(async function () {
       // 判断是否为空
       if (this.value.length === 0) {
         return
       }
       const data = await getSuggestion(this.value)
       this.suggestionList = data.options
-    },
+    }, 300),
     handleDelete (index) {
       this.histories.splice(index, 1)
       storageTools.setItem('history', this.histories)
