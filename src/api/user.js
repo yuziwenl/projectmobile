@@ -19,3 +19,12 @@ export const blacklists = (id) => {
     target: id
   })
 }
+export const followUser = (id) => {
+  return request.post('/app/v1_0/user/followings', {
+    target: id
+  })
+}
+// 取消关注用户
+export const unFollowUser = (id) => {
+  return request.delete(`/app/v1_0/user/followings/${id}`)
+}

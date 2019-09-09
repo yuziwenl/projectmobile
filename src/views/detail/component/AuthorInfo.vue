@@ -10,16 +10,37 @@
     <div>
       <van-button
         type="danger"
-        :loading="false"
-      >关注</van-button>
+        :loading="loading"
+        @click='handleFollow'
+      >{{article.is_followed?'已':''}}关注</van-button>
     </div>
   </div>
 </template>
 
 <script>
+import { followUser, unFollowUser } from '@/api/user'
 export default {
   name: 'AuthorInfo',
-  props: ['article']
+  props: ['article'],
+  data () {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    async handleFollow () {
+      this.loading = true
+      if (this.article.is_followed) {
+        await unFollowUser(this.article.aut_id)
+        this.article.is_followed = false
+      } else {
+        await followUser(this.article.aut_id)
+        this.article.is_followed = true
+      }
+      this.loading = false
+    }
+
+  }
 }
 </script>
 
