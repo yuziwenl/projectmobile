@@ -17,7 +17,7 @@
 
       </div>
       <!-- 点赞和取消 -->
-      <more-action></more-action>
+      <more-action :article='article'></more-action>
     </div>
   </div>
 </template>
