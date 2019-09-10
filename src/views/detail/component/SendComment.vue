@@ -1,22 +1,53 @@
 <template>
   <div class="add-comment">
     <div class="input-wrap">
-      <input type="text">
+      <input type="text" v-model="content">
     </div>
     <div class="more-wrap">
       <van-icon
         v-if="!isArticle"
         name="star-o"></van-icon>
       <van-button
+      @click="handleSend"
         size="small">发布</van-button>
     </div>
   </div>
 </template>
 
 <script>
+import { sendComment } from '@/api/comment'
 export default {
   name: 'SendComment',
-  props: ['isArticle']
+  props: ['isArticle', 'target'],
+  // 评论的目标ID
+  data () {
+    return {
+      content: ''
+    }
+  },
+  methods: {
+    async handleSend () {
+      if (!this.$checkLogin()) {
+        return
+      }
+      if (this.content.length === 0) {
+        this.$toast('请输入评论内容')
+        return
+      }
+      try {
+        await sendComment({
+          target: this.target,
+          content: this.content
+        })
+        // console.log(data)
+        // data.new_obj 刚发送的评论
+        this.content = ''
+      } catch (err) {
+        this.$toast.fail('发送失败')
+      }
+    }
+
+  }
 }
 </script>
 
