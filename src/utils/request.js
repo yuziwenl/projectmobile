@@ -1,6 +1,7 @@
 import axios from 'axios'
 import JSONbig from 'json-bigint'
 import store from '@/store'
+import router from '@/router'
 const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
 })
@@ -23,6 +24,29 @@ instance.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // Do something with request error
+  if (error.response.status === 401) {
+    const refreshToken = store.state.user.refresh_token
+    try {
+      const response = axios({
+        method: 'put',
+        url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+        headers: {
+          Authorization: `Bearer ${refreshToken}`
+        }
+      })
+      // 新的2小时可用的token
+      const token = response.data.data.token
+      // 存储新的token
+      store.commit('setUser', {
+        token: token,
+        refresh_token: refreshToken
+      })
+      // 重新发送上一次401的请求
+      return instance(error.config)
+    } catch (error) {
+      router.push('./login')
+    }
+  }
   return Promise.reject(error)
 })
 
