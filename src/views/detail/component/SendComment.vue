@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import eventHub from '@/utils/eventHub'
 import { sendComment } from '@/api/comment'
 export default {
   name: 'SendComment',
@@ -35,11 +36,13 @@ export default {
         return
       }
       try {
-        await sendComment({
+        const data = await sendComment({
           target: this.target,
           content: this.content,
           art_id: this.art_id
         })
+        // 触发事件
+        eventHub.$emit('sendSuccess', data.new_obj)
         // console.log(data)
         // data.new_obj 刚发送的评论
         this.content = ''
