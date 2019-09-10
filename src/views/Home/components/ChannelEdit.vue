@@ -102,26 +102,27 @@ export default {
     },
     async handleMyChannelItem (index, channelId) {
       if (!this.isEdit) {
-        return false
-      }
-      if (!this.isEdit) {
+        // 告诉父组件，选中的频道的索引
+        // 关闭对话框
         this.$emit('activeChange', index)
+        return
       }
-      // 判断当前激活项的索引，是否是数组中的最后一项的索引
-      if (this.active === this.channels.length - 1) {
-        this.$emit('last')
-      }
+
       this.channels.splice(index, 1)
       if (this.user) {
         await deleteChannel(channelId)
       }
       setItem('channels', this.channels)
+      // 判断当前激活项的索引，是否是数组中的最后一项的索引
+      if (this.active === this.channels.length - 1 && this.isEdit) {
+        this.$emit('last')
+      }
     },
     async handleChannelItem (channel) {
       this.$set(channel, 'timestamp', null)
-      this.$set(channel, 'articles ', [])
+      this.$set(channel, 'articles', [])
       this.$set(channel, 'loading', false)
-      this.$set(channel, 'finished ', false)
+      this.$set(channel, 'finished', false)
       this.$set(channel, 'pullLoading', false)
       this.channels.push(channel)
       if (this.user) {
