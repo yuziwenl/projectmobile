@@ -18,7 +18,7 @@
       </div>
       <!-- 点赞和取消 -->
       <more-action :article='article'></more-action>
-      <comment-list></comment-list>
+      <comment-list :isArticle="true" :id='article.art_id.toString()'></comment-list>
     </div>
   </div>
 </template>

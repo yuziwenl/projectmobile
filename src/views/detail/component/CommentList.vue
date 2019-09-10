@@ -6,24 +6,24 @@
     @load="onLoad"
   >
     <van-cell
-      v-for="item in list"
-      :key="item"
+      v-for="comment in list"
+      :key="comment.com_id.toString()"
     >
       <div slot="icon">
-        <img class="avatar" src="http://toutiao.meiduo.site/Fn6-mrb5zLTZIRG3yH3jG8HrURdU" alt="">
+        <img class="avatar" :src="comment.aut_photo" alt="">
       </div>
       <div slot="title">
-        <span>只是为了好玩儿</span>
+        <span>{{comment.aut_name}}</span>
       </div>
       <div slot="default">
         <van-button icon="like-o" size="mini" plain>赞</van-button>
       </div>
       <div slot="label">
-        <p>hello world</p>
+        <p>{{comment.content}}</p>
         <p>
-          <span>2019-7-17 14:08:20</span>
+          <span>{{comment.pubdata|fmtDate}}</span>
           ·
-          <span>回复</span>
+          <span>{{comment.reply_count}}</span>
         </p>
       </div>
     </van-cell>
@@ -31,21 +31,47 @@
 </template>
 
 <script>
+import { getComments } from '@/api/comment'
 export default {
   name: 'CommentList',
+  props: ['isArticle', 'id'],
   data () {
     return {
       loading: false,
       finished: false,
-      list: []
+      list: [],
+      offset: null,
+      limit: 10
     }
   },
   methods: {
-    onLoad () {
+    async onLoad () {
+      try {
+        const data = await getComments({
+          isArticle: this.isArticle,
+          source: this.id,
+          offset: this.offset,
+          limit: this.limit
+        })
+        this.offset = data.last_id
+        this.list.push(...data.results)
+        this.loading = false
+        if (data.results.length === 0) {
+          this.finished = true
+        }
+      } catch (error) {
+        console.dir(error)
+      }
     }
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  margin-right: 5px;
+}
 </style>
