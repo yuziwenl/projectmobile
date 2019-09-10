@@ -102,7 +102,14 @@ export default {
     },
     async handleMyChannelItem (index, channelId) {
       if (!this.isEdit) {
+        return false
+      }
+      if (!this.isEdit) {
         this.$emit('activeChange', index)
+      }
+      // 判断当前激活项的索引，是否是数组中的最后一项的索引
+      if (this.active === this.channels.length - 1) {
+        this.$emit('last')
       }
       this.channels.splice(index, 1)
       if (this.user) {

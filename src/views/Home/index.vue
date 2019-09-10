@@ -54,7 +54,7 @@
       </van-tab>
     </van-tabs>
     <more-action v-if="currentArticle" @handleSuccess='handleSuccess' :article='currentArticle' v-model="showMoreAction"></more-action>
-    <channel-edit v-model="showChannelEdit" :channels='channels' :active="activeIndex" @activeChange='handleChange'></channel-edit>
+    <channel-edit v-model="showChannelEdit" :channels='channels' :active="activeIndex" @activeChange='handleChange' @last="handleLast"></channel-edit>
   </div>
 </template>
 
@@ -161,6 +161,9 @@ export default {
     handleChange (index) {
       this.activeIndex = index
       this.showChannelEdit = false
+    },
+    handleLast () {
+      this.activeIndex--
     }
   }
 }
