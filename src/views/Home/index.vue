@@ -90,6 +90,12 @@ export default {
   created () {
     this.loadChannels()
   },
+  // activated () {
+
+  // },
+  // deactivated () {
+
+  // },
   computed: {
     currentChannel () {
       return this.channels[this.activeIndex]
