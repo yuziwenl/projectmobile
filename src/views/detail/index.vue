@@ -21,7 +21,7 @@
       <comment-list :isArticle="true" :id='article.art_id.toString()'></comment-list>
       <!-- 发布评论 -->
       <send-comment :isArticle='true' :target="article.art_id.toString()"></send-comment>
-        <reply-list v-model="showReplyList"></reply-list>
+        <reply-list v-model="showReplyList" :art_id="id"></reply-list>
     </div>
   </div>
 </template>
