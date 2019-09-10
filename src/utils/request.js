@@ -44,7 +44,12 @@ instance.interceptors.request.use(function (config) {
       // 重新发送上一次401的请求
       return instance(error.config)
     } catch (error) {
-      router.push('./login')
+      router.push({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
     }
   }
   return Promise.reject(error)
