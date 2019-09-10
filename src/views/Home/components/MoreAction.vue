@@ -79,6 +79,9 @@ export default {
       }
     },
     async dislike () {
+      if (!this.$checkLogin()) {
+        return
+      }
       try {
         await dislikeArticle(this.article.art_id)
         this.$toast.success('操作成功')

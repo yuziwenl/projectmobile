@@ -9,6 +9,8 @@ import zhCN from 'vee-validate/dist/locale/zh_CN'
 import { fmtDate } from '@/utils/dayjs'
 import 'vant/lib/index.css'
 import './styles/index.less'
+import Checklogin from '@/utils/CheckLogin'
+Vue.use(Checklogin)
 Vue.filter('fmtDate', fmtDate)
 Vue.use(Vant)
 Vue.use(VeeValidate, {
