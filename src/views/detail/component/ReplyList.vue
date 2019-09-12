@@ -54,8 +54,10 @@ export default {
     ...mapState(['currentComment'])
   },
   created () {
-    eventHub.$on('sendSuccess', () => {
-      this.currentComment.reply_count++
+    eventHub.$on('sendSuccess', (obj) => {
+      if (this.isArticle === obj.isArticle) {
+        this.currentComment.reply_count++
+      }
     })
   }
 }

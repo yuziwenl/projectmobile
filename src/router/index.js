@@ -13,7 +13,13 @@ export default new Router({
       name: 'Home',
       path: '',
       component: Home
-    }]
+    },
+    {
+      name: 'user',
+      path: '/user',
+      component: () => import(/* webpackChunkName: "user" */ '../views/User.vue')
+    }
+    ]
   },
   {
     path: '/search-result/:q',
