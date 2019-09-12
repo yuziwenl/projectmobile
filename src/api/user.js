@@ -28,3 +28,6 @@ export const followUser = (id) => {
 export const unFollowUser = (id) => {
   return request.delete(`/app/v1_0/user/followings/${id}`)
 }
+export const getUserInfo = () => {
+  return request.get('/app/v1_0/user')
+}
