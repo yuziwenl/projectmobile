@@ -22,11 +22,11 @@
             <span class="count">{{userInfo.follow_count}}</span>
             <span class="text">关注</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item  @click="$router.push('/follow?type=1')">
             <span class="count">{{ userInfo.fans_count }}</span>
             <span class="text">粉丝</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item  @click="$router.push('/follow?type=2')">
             <span class="count">{{ userInfo.like_count }}</span>
             <span class="text">获赞</span>
           </van-grid-item>

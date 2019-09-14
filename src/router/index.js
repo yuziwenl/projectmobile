@@ -22,6 +22,11 @@ export default new Router({
     ]
   },
   {
+    path: '/follow',
+    name: 'follow',
+    component: () => import(/* webpackChunkName: "follow" */ '../views/Follow.vue')
+  },
+  {
     path: '/user-profile',
     name: 'user-profile',
     component: () => import(/* webpackChunkName: "user-profile" */ '../views/user-profile/index.vue')
