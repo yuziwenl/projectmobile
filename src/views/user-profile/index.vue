@@ -6,7 +6,7 @@
       @click-left="$router.back()"
     />
     <van-cell-group>
-      <van-cell title="头像" is-link>
+      <van-cell title="头像" is-link @click="showUploadFile=true">
         <div slot="default">
           <img width="30" height="30" :src="
           userProfile.photo" alt="">
@@ -19,16 +19,22 @@
       <van-cell title="生日" is-link
         :value="userProfile.birthday"/>
     </van-cell-group>
+    <upload-file v-model="showUploadFile"></upload-file>
   </div>
 </template>
 
 <script>
 import { getUserProfile } from '@/api/user'
+import UploadFile from './component/UploadFile'
 export default {
   name: 'UserProfile',
+  components: {
+    UploadFile
+  },
   data () {
     return {
-      userProfile: {}
+      userProfile: {},
+      showUploadFile: false
     }
   },
   created () {
