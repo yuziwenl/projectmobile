@@ -19,7 +19,7 @@
       <van-cell title="生日" is-link
         :value="userProfile.birthday"/>
     </van-cell-group>
-    <upload-file v-model="showUploadFile"></upload-file>
+    <upload-file v-model="showUploadFile" @upload-success='handleSuccess'></upload-file>
   </div>
 </template>
 
@@ -44,6 +44,9 @@ export default {
     async loadUserProfile () {
       const data = await getUserProfile()
       this.userProfile = data
+    },
+    handleSuccess (photo) {
+      this.userProfile.photo = photo
     }
   }
 }
