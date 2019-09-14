@@ -44,3 +44,26 @@ export const uploadPhoto = (key, file) => {
   formData.append(key, file)
   return request.patch('/app/v1_0/user/photo', formData)
 }
+// 获取关注用户列表
+export const getFollowings = ({
+  obj
+}) => {
+  return request.get('/app/v1_0/user/followings', {
+    params: {
+      page: obj.page,
+      per_page: obj.per_page
+    }
+  })
+}
+
+// 获取粉丝用户列表
+export const getFollowers = ({
+  obj
+}) => {
+  return request.get('/app/v1_0/user/followers', {
+    params: {
+      page: obj.page,
+      per_page: obj.per_page
+    }
+  })
+}
